@@ -11,4 +11,5 @@ class Club(Base):
     season = Column(String(10), nullable=True)
     total_matches = Column(Integer, default=0)
 
-    league = relationship("League", back_populates="clubs")
+    league = relationship("League", back_populates="club")
+    player_general = relationship("Player_general", back_populates="club")
