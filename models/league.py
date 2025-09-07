@@ -10,4 +10,4 @@ class League(Base):
     gender = Column(String(1), nullable=True)
     first_season = Column(String(10), nullable=True)
 
-    clubs = relationship("Club", back_populates="league")
+    club = relationship("Club", back_populates="league")

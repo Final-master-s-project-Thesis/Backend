@@ -11,6 +11,7 @@ from .fm_dead_ball_stats import FM_dead_ball_stats
 from .shooting_performance import Shooting_performance
 from .passing_performance import Passing_performance
 from .defensive_performance import Defensive_performance
+from .duel_performance import Duel_performance
 from .possession_performance import Possession_performance
 from .shots_goals_creation_performance import Shots_goals_creation_performance
 from .goalkeeping_performance import Goalkeeping_performance

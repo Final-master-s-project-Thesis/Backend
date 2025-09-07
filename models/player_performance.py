@@ -12,7 +12,7 @@ class Player_performance(Base):
     player_general = relationship("Player_general", back_populates="player_performance")
     passing_performance = relationship("Passing_performance", back_populates="player_performance")
     shooting_performance = relationship("Shooting_performance", back_populates="player_performance")
-    defending_performance = relationship("Defending_performance", back_populates="player_performance")
+    defensive_performance = relationship("Defensive_performance", back_populates="player_performance")
     possession_performance = relationship("Possession_performance", back_populates="player_performance")
     duel_performance = relationship("Duel_performance", back_populates="player_performance")
     goalkeeping_performance = relationship("Goalkeeping_performance", back_populates="player_performance")
