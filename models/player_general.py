@@ -8,7 +8,9 @@ class Player_general(Base):
     club_id = Column(String(10), ForeignKey("club.club_id"), index=True, nullable=False)
     player_id = Column(String(10), primary_key=True, index=True, nullable=False)
     name = Column(String(100), index=True, nullable=False)
-    country_code = Column(String(3), ForeignKey("country.country_code"), nullable=True)
+    country_code = Column(String(4), 
+                          #ForeignKey("country.country_code"), 
+                          nullable=True)
     age = Column(Integer, nullable=True)
     position = Column(String(100), nullable=True)
     height = Column(Integer, nullable=True)
@@ -20,7 +22,7 @@ class Player_general(Base):
     salary_month = Column(Float, nullable=True)
 
     club = relationship("Club", back_populates="player_general")
-    country = relationship("Country", back_populates="player_general")
+    #country = relationship("Country", back_populates="player_general")
     player_performance = relationship("Player_performance", back_populates="player_general")
     fm_goalkeeper_stats = relationship("FM_goalkeeper_stats", back_populates="player_general")
     fm_physical_stats = relationship("FM_physical_stats", back_populates="player_general")

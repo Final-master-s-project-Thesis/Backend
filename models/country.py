@@ -8,4 +8,4 @@ class Country(Base):
     country_code = Column(String(3), primary_key=True, nullable=False)
     country = Column(String(100), unique=True, index=True, nullable=False)
 
-    player_general = relationship("Player_general", back_populates="country")
+    #player_general = relationship("Player_general", back_populates="country")
