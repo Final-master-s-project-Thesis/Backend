@@ -125,7 +125,7 @@ def get_similar_players(player_id: str, db: db_dependency, filters: PlayerFilter
     query = db.query(Player_general).filter(
         Player_general.type_player == player.type_player,
     )
-    query = apply_filters(similar_players, filters)
+    query = apply_filters(query, filters)
     
     similar_players = query.all()
     return similar_players
