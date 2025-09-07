@@ -2,7 +2,7 @@ from typing import List
 from fastapi import APIRouter, status, HTTPException, Query
 from dependencies.dependencies import db_dependency
 from models import Player_general
-from services.player_data import get_player_fm24_data, get_player_performance
+from services.player_service import get_player_fm24_data, get_player_performance
 
 router = APIRouter(
     prefix="/compare",
