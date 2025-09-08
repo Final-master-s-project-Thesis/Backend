@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, status, HTTPException, Query
 from dependencies.dependencies import db_dependency
 from typing import Optional
-from models import Player_general
+from models import Player_general, Club, Country
 from services.auxiliar import apply_filters
 from services.filters import PlayerFilters
 from services.player_service import get_player_fm24_data, get_player_performance
@@ -16,11 +16,12 @@ router = APIRouter(
     "/", 
     status_code=status.HTTP_200_OK,
     summary="Get all players general data and filter them",
-    description="Retrieve all players with optional filters such as season, league, or club.",
+    description="Retrieve all players with optional filters.",
 )
 def get_players(
     db: db_dependency, 
-    filters: PlayerFilters = Depends(), 
+    filters: PlayerFilters = Depends(),
+    reduced_data: Optional[bool] = Query(False, description="If true, return only general player data"),
     all_data: Optional[bool] = Query(False, description="If true, add fm24_data and performance_data to each player")
 ):
     query = db.query(Player_general)
@@ -43,6 +44,27 @@ def get_players(
             full_data_players.append(full_data)
         
         return full_data_players
+    
+    if reduced_data:
+        countries = db.query(Country).all()
+        clubs = db.query(Club).all()
+        
+        partial_data_players = []
+        for player in players:
+            player.country = next((c for c in countries if c.country_code == player.country_code), None)
+            player.club = next((c for c in clubs if c.club_id == player.club_id), None)
+
+            partial_data = {
+                "player_id": player.player_id,
+                "name": player.name,
+                "age": player.age,
+                "club_name": player.club.club_name if player.club else None,
+                "country_name": player.country.country if player.country else None,
+            }
+
+            partial_data_players.append(partial_data)
+
+        return partial_data_players
 
     return players
 
