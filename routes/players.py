@@ -35,7 +35,7 @@ def get_players(
             performance_data = get_player_performance(db, player.player_id)
 
             full_data = {
-                "player_info": player,
+                "player": player,
                 "fm24_data": fm24_data,
                 "performance_data": performance_data
             }
@@ -73,7 +73,7 @@ def get_player_full_data(player_id: str, db: db_dependency):
     performance_data = get_player_performance(db, player_id)
 
     full_data = {
-        "player_info": player,
+        "player": player,
         "fm24_data": fm24_data,
         "performance_data": performance_data
     }

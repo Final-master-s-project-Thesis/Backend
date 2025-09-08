@@ -41,7 +41,7 @@ def compare_players(
         performance_data = get_player_performance(db, player_id)
 
         player_data = {
-            "general": player,
+            "player": player,
             "fm24_data": fm24_data,
             "performances_data": performance_data,
         }
