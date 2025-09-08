@@ -7,6 +7,10 @@ def dict_by_id(obj_list, id_field, id_value):
     return obj
 
 def apply_filters(query, filters):
+    if filters.country_code is not None:
+        query = query.filter(Player_general.country_code == filters.country_code)
+    if filters.club_id is not None:
+        query = query.filter(Player_general.club_id == filters.club_id)
     if filters.age_min is not None:
         query = query.filter(Player_general.age >= filters.age_min)
     if filters.age_max is not None:
