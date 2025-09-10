@@ -43,7 +43,7 @@ def compare_players(
         player_data = {
             "player": player,
             "fm24_data": fm24_data,
-            "performances_data": performance_data,
+            "performance_data": performance_data,
         }
 
         result.append(player_data)
