@@ -20,8 +20,9 @@ deployed = {
 }
 
 def get_database_config(env: str = "local"):
-    env = os.getenv("ENV", "local")
     if env == "local":
         return localhost
     elif env == "deployed":
         return deployed
+    else:
+        raise ValueError(f"Unknown environment: {env}")
