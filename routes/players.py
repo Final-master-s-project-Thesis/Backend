@@ -22,7 +22,8 @@ def get_players(
     db: db_dependency, 
     filters: PlayerFilters = Depends(),
     reduced_data: Optional[bool] = Query(False, description="If true, return only general player data"),
-    all_data: Optional[bool] = Query(False, description="If true, add fm24_data and performance_data to each player")
+    all_data: Optional[bool] = Query(False, description="If true, add fm24_data and performance_data to each player"),
+    limit: Optional[int] = Query(2837, description="Limit the number of players returned")
 ):
     query = db.query(Player_general)
     query = apply_filters(query, filters)
@@ -30,8 +31,8 @@ def get_players(
     
     if all_data:
         full_data_players = []
-        
-        for player in players:
+
+        for player in players[:limit]:
             fm24_data = get_player_fm24_data(db, player.player_id)
             performance_data = get_player_performance(db, player.player_id)
 
@@ -50,7 +51,7 @@ def get_players(
         clubs = db.query(Club).all()
         
         partial_data_players = []
-        for player in players:
+        for player in players[:limit]:
             player.country = next((c for c in countries if c.country_code == player.country_code), None)
             player.club = next((c for c in clubs if c.club_id == player.club_id), None)
 
@@ -66,7 +67,7 @@ def get_players(
 
         return partial_data_players
 
-    return players
+    return players[:limit]
 
 @router.get(
     "/{player_id}", 
