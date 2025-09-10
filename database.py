@@ -4,7 +4,7 @@ from sqlalchemy.orm import sessionmaker
 from config import get_database_config
 import os
 
-database_config = get_database_config("local")
+database_config = get_database_config("deployed")
 
 env = os.getenv("ENV", "local")
 database_config = get_database_config(env)
