@@ -1,18 +1,27 @@
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
-from dotenv import load_dotenv
+from config import get_database_config
 import os
 
-load_dotenv()
+database_config = get_database_config("local")
 
-DB_USER = os.getenv("DB_USER")
-DB_PASSWORD = os.getenv("DB_PASSWORD")
-DB_HOST = os.getenv("DB_HOST")
-DB_PORT = os.getenv("DB_PORT")
-DB_NAME = os.getenv("DB_NAME")
+env = os.getenv("ENV", "local")
+database_config = get_database_config(env)
 
-URL = f"mysql+pymysql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+DB_USER = database_config["user"]
+DB_PASSWORD = database_config["password"]
+DB_HOST = database_config["host"]
+DB_PORT = database_config["port"]
+DB_NAME = database_config["database"]
+
+if env == "local":
+	URL = f"mysql+pymysql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+elif env == "deployed":
+	URL = f"postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+else:
+	raise ValueError("ENV debe ser 'local' o 'deployed'")
+
 engine = create_engine(URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
